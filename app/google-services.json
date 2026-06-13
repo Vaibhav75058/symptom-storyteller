@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "501532215958",
+    "project_id": "symptom-storyteller",
+    "storage_bucket": "symptom-storyteller.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501532215958:android:86b49df57acc27823d10b7",
+        "android_client_info": {
+          "package_name": "com.symptomstoryteller.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501532215958-spgd4a7qq3djj9qt1bvihqclahll5cah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbhCdsE9F00PJ3XCqi5RZ1_QCdsUd-zkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501532215958-spgd4a7qq3djj9qt1bvihqclahll5cah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

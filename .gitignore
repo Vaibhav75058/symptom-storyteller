@@ -1,0 +1,33 @@
+# dependencies
+node_modules/
+
+# local env files
+.env
+.env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# Expo/Android/iOS specific
+.expo/
+dist/
+web-build/
+
+# JDK & temporary files
+app/jdk-17.0.2/
+app/jdk17.zip
+app/test_api.js
+
+# IDEs
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
