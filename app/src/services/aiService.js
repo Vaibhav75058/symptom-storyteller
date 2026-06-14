@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const OPENROUTER_API_KEY = process.env.EXPO_PUBLIC_OPENROUTER_API_KEY;
+const OPENROUTER_API_KEY = process.env.EXPO_PUBLIC_OPENROUTER_API_KEY || process.env.EXPO_PUBLIC_c_API_KEY;
 
 if (!OPENROUTER_API_KEY) {
-  console.error('❌ EXPO_PUBLIC_OPENROUTER_API_KEY is not set in .env file!');
+  console.error('❌ OpenRouter API key is not set in .env file!');
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -81,7 +81,7 @@ const checkEmergency = (text) => {
 // ─────────────────────────────────────────────────────────────
 // MAIN FUNCTION
 // ─────────────────────────────────────────────────────────────
-export const sendMessageToAI = async (userMessage, chatHistory = []) => {
+export const sendMessageToAI = async (userMessage, chatHistory = [], userProfile = null) => {
 
   // 1. Fast client-side emergency check
   if (checkEmergency(userMessage)) {
@@ -94,7 +94,23 @@ export const sendMessageToAI = async (userMessage, chatHistory = []) => {
   }
 
   // 2. Build messages for API
-  const messages = [{ role: 'system', content: SYSTEM_PROMPT }];
+  let systemPromptWithProfile = SYSTEM_PROMPT;
+  if (userProfile && (userProfile.age || userProfile.gender || userProfile.allergies || userProfile.chronicConditions)) {
+    const profileContext = `\n\n## USER MEDICAL PROFILE CONTEXT (CRITICAL FOR ADVICE)
+- Age: ${userProfile.age || 'Not specified'}
+- Gender: ${userProfile.gender || 'Not specified'}
+- Blood Group: ${userProfile.bloodGroup || 'Not specified'}
+- Known Allergies: ${userProfile.allergies || 'None specified'}
+- Chronic Conditions: ${userProfile.chronicConditions || 'None specified'}
+
+INSTRUCTION FOR PERSONALIZED ADVICE:
+1. Tailor your questions and home care advice to the user's age and gender.
+2. If they have chronic conditions (e.g. Diabetes, High Blood Pressure) or known allergies (e.g. Penicillin, Sulfa drugs), you MUST cross-reference their symptoms or any mentioned medicines. Immediately warn them of any potential risk (e.g. if they have High Blood Pressure, advise avoiding NSAIDs like Ibuprofen/Aspirin; if they are diabetic, warn about sugar-based syrups; if they have allergies, warn them to double-check compound ingredients).`;
+    
+    systemPromptWithProfile += profileContext;
+  }
+
+  const messages = [{ role: 'system', content: systemPromptWithProfile }];
 
   chatHistory.forEach(msg => {
     messages.push({

@@ -7,6 +7,32 @@ import { useLanguage } from '../hooks/useLanguage';
 import { useTheme } from '../hooks/useTheme';
 import { getUserProfile, saveUserProfile, defaultProfile } from '../services/profileService';
 
+const InputRow = ({ label, value, onChange, placeholder, keyboardType, colors }) => (
+  <View style={{ marginBottom: 16 }}>
+    <Text style={{ fontSize: 13, fontWeight: '600', color: colors.subtext, marginBottom: 6, marginLeft: 2 }}>
+      {label}
+    </Text>
+    <TextInput
+      style={{
+        width: '100%',
+        backgroundColor: colors.input,
+        color: colors.inputText || colors.text,
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        borderRadius: 14,
+        fontSize: 14,
+        borderWidth: 1,
+        borderColor: colors.border,
+      }}
+      value={value}
+      onChangeText={onChange}
+      placeholder={placeholder}
+      placeholderTextColor={colors.subtext}
+      keyboardType={keyboardType || 'default'}
+    />
+  </View>
+);
+
 export default function ProfileScreen() {
   const { user, logout } = useAuth();
   const { t, isHindi } = useLanguage();
@@ -43,32 +69,6 @@ export default function ProfileScreen() {
   const handleLogout = () => {
     logout();
   };
-
-  const InputRow = ({ label, value, onChange, placeholder, keyboardType }) => (
-    <View style={{ marginBottom: 16 }}>
-      <Text style={{ fontSize: 13, fontWeight: '600', color: colors.subtext, marginBottom: 6, marginLeft: 2 }}>
-        {label}
-      </Text>
-      <TextInput
-        style={{
-          width: '100%',
-          backgroundColor: colors.input,
-          color: colors.inputText || colors.text,
-          paddingHorizontal: 16,
-          paddingVertical: 12,
-          borderRadius: 14,
-          fontSize: 14,
-          borderWidth: 1,
-          borderColor: colors.border,
-        }}
-        value={value}
-        onChangeText={onChange}
-        placeholder={placeholder}
-        placeholderTextColor={colors.subtext}
-        keyboardType={keyboardType || 'default'}
-      />
-    </View>
-  );
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
@@ -149,30 +149,35 @@ export default function ProfileScreen() {
                   onChange={v => setProfile({...profile, age: v})} 
                   placeholder="e.g. 28" 
                   keyboardType="numeric"
+                  colors={colors}
                 />
                 <InputRow 
                   label={t('gender')} 
                   value={profile.gender} 
                   onChange={v => setProfile({...profile, gender: v})} 
                   placeholder="e.g. Male, Female"
+                  colors={colors}
                 />
                 <InputRow 
                   label={t('bloodGroup')} 
                   value={profile.bloodGroup} 
                   onChange={v => setProfile({...profile, bloodGroup: v})} 
                   placeholder="e.g. O+, A-, B+"
+                  colors={colors}
                 />
                 <InputRow 
                   label={t('allergies')} 
                   value={profile.allergies} 
                   onChange={v => setProfile({...profile, allergies: v})} 
                   placeholder="e.g. Peanuts, Penicillin (or None)"
+                  colors={colors}
                 />
                 <InputRow 
                   label={t('chronicConditions')} 
                   value={profile.chronicConditions} 
                   onChange={v => setProfile({...profile, chronicConditions: v})} 
                   placeholder="e.g. Asthma, Hypertension (or None)"
+                  colors={colors}
                 />
 
                 <TouchableOpacity 

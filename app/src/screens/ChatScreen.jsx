@@ -12,6 +12,7 @@ import { useLanguage } from '../hooks/useLanguage';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
 import { saveSession, getSessionById } from '../services/sessionService';
+import { getUserProfile } from '../services/profileService';
 
 // Lazy-load expo-av — it may not be available in Expo Go
 let Audio = null;
@@ -36,6 +37,16 @@ export default function ChatScreen({ route, navigation }) {
   const [quickReplies, setQuickReplies] = useState([]);
   const [doctorType, setDoctorType] = useState(null);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
+
+  // Load user profile context
+  useEffect(() => {
+    if (user) {
+      getUserProfile(user.uid)
+        .then(profile => setUserProfile(profile))
+        .catch(err => console.log('Error loading profile in Chat:', err));
+    }
+  }, [user]);
 
   // Load history or reset state when route parameters change
   useEffect(() => {
@@ -233,7 +244,7 @@ export default function ChatScreen({ route, navigation }) {
 
     try {
       // Send chat history (excluding system prompt because sendMessageToAI adds it)
-      const response = await sendMessageToAI(userText, messages);
+      const response = await sendMessageToAI(userText, messages, userProfile);
 
       if (response.isEmergency) {
         setIsEmergency(true);
@@ -314,7 +325,7 @@ export default function ChatScreen({ route, navigation }) {
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }} edges={['top']}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
       >
         {/* Header */}

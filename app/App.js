@@ -1,33 +1,6 @@
 import 'react-native-gesture-handler';
 import './global.css';
 
-// Mock isRunningInExpoGo to return false to prevent expo-notifications from crashing on startup in Expo Go
-import * as Expo from 'expo';
-try {
-  Object.defineProperty(Expo, 'isRunningInExpoGo', {
-    value: () => false,
-    writable: true,
-    configurable: true
-  });
-} catch (e) {
-  try {
-    Expo.isRunningInExpoGo = () => false;
-  } catch (err) {}
-}
-
-// Mock Constants.appOwnership BEFORE importing expo-notifications to bypass Expo Go's remote notification block
-import Constants from 'expo-constants';
-try {
-  Object.defineProperty(Constants, 'appOwnership', {
-    get: () => 'standalone',
-    configurable: true
-  });
-} catch (e) {
-  try {
-    Constants.appOwnership = 'standalone';
-  } catch (err) {}
-}
-
 import React, { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AppNavigator from './src/navigation/AppNavigator';

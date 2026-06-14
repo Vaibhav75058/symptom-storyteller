@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const OPENROUTER_API_KEY = process.env.EXPO_PUBLIC_OPENROUTER_API_KEY;
+const OPENROUTER_API_KEY = process.env.EXPO_PUBLIC_OPENROUTER_API_KEY || process.env.EXPO_PUBLIC_c_API_KEY;
 
 // ─────────────────────────────────────────────────────────────
 // SYMPTOM PHOTO ANALYSIS PROMPT — ENGLISH & HINDI SUPPORT

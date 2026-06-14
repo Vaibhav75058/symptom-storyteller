@@ -279,7 +279,7 @@ export default function HealthDashboardScreen({ navigation }) {
           flex: 1, backgroundColor: colors.overlay,
           justifyContent: 'flex-end',
         }}>
-          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <View style={{
               backgroundColor: colors.card,
               borderTopLeftRadius: 28, borderTopRightRadius: 28,
