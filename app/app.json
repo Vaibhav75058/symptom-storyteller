@@ -29,6 +29,14 @@
           "resizeMode": "contain",
           "backgroundColor": "#FFFFFF"
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraProguardRules": "-keep class expo.modules.kotlin.** { *; }\n-keep class kotlin.reflect.** { *; }\n-keep class kotlinx.serialization.** { *; }"
+          }
+        }
       ]
     ],
     "extra": {
